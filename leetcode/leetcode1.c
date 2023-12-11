@@ -1,4 +1,5 @@
-//[ 2 7 1 3 15 ]  和为target的值的下标 target = 22  返回形式：[1 12]
+/* 两数之和
+[ 2 7 1 3 15 ]  和为target的值的下标 target = 22  返回形式：[1 12]*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

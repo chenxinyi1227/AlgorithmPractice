@@ -1,10 +1,10 @@
+//快速排序
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 #define BUFFER_SIZE 10
 
-//快速排序
 void FastSort(int *a,int start,int end)
 {
     //终止条件
