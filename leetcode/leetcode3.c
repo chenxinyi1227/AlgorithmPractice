@@ -5,7 +5,7 @@
 //删除有序数组中的重复项
 int removeDuplicates(int *nums, int numsSize)
 {
-    int k=1;
+    int k = 1;
     for(int idx = 1; idx < numsSize; idx++)
     {
       if(nums[idx] != nums[idx-1])
