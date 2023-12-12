@@ -49,23 +49,23 @@ int main()
 {
     int nums[BUFFER_SIZE] = {0};
     srand(time(NULL));
-    for(int idx =0;idx < BUFFER_SIZE;idx++)
+    for(int idx = 0; idx < BUFFER_SIZE; idx++)
     {
         int Val = rand()%10 + 1;
         nums[idx] = Val; 
     }
     printf("排序前:");
-    for(int idx = 0;idx < BUFFER_SIZE; idx++)
+    for(int idx = 0; idx < BUFFER_SIZE; idx++)
     {
-       printf("%d ",nums[idx]);
+       printf("%d ", nums[idx]);
     }
     
-    FastSort(nums, 0,BUFFER_SIZE-1);
+    FastSort(nums, 0, BUFFER_SIZE-1);
 
     printf("\n排序后:");
-    for(int idx = 0;idx < BUFFER_SIZE; idx++)
+    for(int idx = 0; idx < BUFFER_SIZE; idx++)
     {
-       printf("%d ",nums[idx]);
+       printf("%d ", nums[idx]);
     }
      printf("\n");
 }
