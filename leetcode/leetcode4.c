@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <unistd.h>
+
 #define BUFFER_SIZE 6
 
 int removeElement(int *nums, int numsSize, int val)
