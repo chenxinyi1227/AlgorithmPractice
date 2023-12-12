@@ -4,6 +4,10 @@
 int MyStrlen(const char *str)
 {
     int count = 0;
+    if (str == NULL)
+    {
+        return count;
+    }
     while (*str != '\0')//判断字符是否为\0,不是\0就自增，count也自增记录个数
 	{
 		str++;
@@ -13,13 +17,14 @@ int MyStrlen(const char *str)
 }
 void MyStrcpy(char *dest, const char *src)
 {
-    // int len = MyStrlen(src);
+#if 0  
+     int len = MyStrlen(src);
     // for(int index = 0; index < len; index++ )
     // {
     //     dest[index] = src[index];
     // }
     // dest[len] = '\0';
-
+#endif
     while (*src != '\0')
     {
         // *dest=*src;
@@ -36,9 +41,7 @@ void MyStrcat(char *dest, const char *src)
     {
         dest++;
     }
-    
     MyStrcpy(dest,src);
-    
 }
 
 int MyStrcmp(const char *s1, const char *s2)
@@ -53,5 +56,4 @@ int MyStrcmp(const char *s1, const char *s2)
         s2++;  
     }
     return *s1 - *s2;
-
 }

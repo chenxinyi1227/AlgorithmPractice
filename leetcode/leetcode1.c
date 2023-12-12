@@ -4,16 +4,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+
 #define SIZE 5
-int twoSum(int *nums, int numsSize,int target)
+
+int twoSum(int *nums, int numsSize, int target)
 {
-    for(int i = 0;i < numsSize; i++)
+    for(int i = 0; i < numsSize; i++)
     {
-        for(int j = i + 1;j <numsSize; j++)
+        for(int j = i + 1; j < numsSize; j++)
         {
             if(nums[i] + nums[j] == target)
             {
-               printf("[%d,%d]\n",i,j);
+               printf("[%d,%d]\n", i, j);
             } 
         }
     }
