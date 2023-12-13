@@ -21,9 +21,12 @@ int removeElement(int *nums, int numsSize, int val)
         if(nums[index] != val)
         {
             nums[pos] = nums[index];
+            // printf("%d ",nums[pos]);
             pos++;
+            
         }
     }
+    // printf("\n");
     return pos;
 }
 
@@ -34,14 +37,10 @@ int main()
 
     srand(time(NULL));
 
-    for(int idx =0;idx < BUFFER_SIZE;idx++)
+    for(int idx = 0; idx < BUFFER_SIZE; idx++)
     {
-        int Val = rand() % 10 + 1;
-        nums[idx] = Val; 
-    }
-    for(int idx = 0;idx < BUFFER_SIZE; idx++)
-    {
-       printf("%d ",nums[idx]);
+        nums[idx] = rand() % 10 + 1; 
+        printf("%d ", nums[idx]);
     }
 
     int val = 0;

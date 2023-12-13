@@ -32,10 +32,8 @@ int main()
     {
         int Val = rand()%10 + 1;
         nums[idx] = Val; 
-    }
-    for(int idx = 0;idx < SIZE; idx++)
-    {
-       printf("%d ",nums[idx]);
+        // nums[idx] = rand()%10 + 1;
+        printf("%d ",nums[idx]);
     }
 
     int numsSize = sizeof(nums)/sizeof(nums[0]);
