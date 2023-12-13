@@ -1,7 +1,8 @@
-#include "MyString.h"
+#include "myString.h"
 #include <stdio.h>
 
-int MyStrlen(const char *str)
+//获取字符串长度
+int myStrlen(const char *str)
 {
     int count = 0;
     if (str == NULL)
@@ -15,7 +16,7 @@ int MyStrlen(const char *str)
 	}
     return count;
 }
-void  MyStrcpy(char *dest, const char *src)
+void  myStrcpy(char *dest, const char *src)
 {
 #if 0  
      int len = MyStrlen(src);
@@ -35,16 +36,16 @@ void  MyStrcpy(char *dest, const char *src)
     *dest = '\0';  
 }
 
-void MyStrcat(char *dest, const char *src)
+void myStrcat(char *dest, const char *src)
 {
     while(*dest != '\0')
     {
         dest++;
     }
-    MyStrcpy(dest,src);
+    myStrcpy(dest,src);
 }
 
-int MyStrcmp(const char *s1, const char *s2)
+int myStrcmp(const char *s1, const char *s2)
 {
     while(*s1 != '\0' && *s2 != '\0')
     {

@@ -1,4 +1,4 @@
-#include "MyString.h"
+#include "myString.h"
 #include <stdio.h>
 #define BUFFER_SIZE 16
 

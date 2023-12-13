@@ -1,4 +1,4 @@
-src=main.c MyString.c
+src=main.c myString.c
 test:${src}
 	gcc ${src} -o test
 
