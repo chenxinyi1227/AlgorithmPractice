@@ -16,7 +16,7 @@ int myStrlen(const char *str)
 	}
     return count;
 }
-void  myStrcpy(char *dest, const char *src)
+char  *myStrcpy(char *dest, const char *src)
 {
 #if 0  
      int len = MyStrlen(src);
@@ -26,27 +26,44 @@ void  myStrcpy(char *dest, const char *src)
     // }
     // dest[len] = '\0';
 #endif
+    if (dest == NULL || src == NULL)
+    {
+        return 0;
+    }
+
     while (*src != '\0')
     {
-        // *dest=*src;
+        // *dest = *src;
         // dest++;
         // src++;  
         *dest++ = *src++;          
     }
     *dest = '\0';  
+    return dest;
 }
 
-void myStrcat(char *dest, const char *src)
+char *myStrcat(char *dest, const char *src)
 {
+    if (dest == NULL || src == NULL)
+    {
+        return 0;
+    }
+    
     while(*dest != '\0')
     {
         dest++;
     }
     myStrcpy(dest,src);
+    return dest;
 }
 
 int myStrcmp(const char *s1, const char *s2)
 {
+     if (s1 == NULL || s2 == NULL)
+    {
+        return 0;
+    }
+
     while(*s1 != '\0' && *s2 != '\0')
     {
         if(*s1 != *s2)

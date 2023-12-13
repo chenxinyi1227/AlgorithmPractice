@@ -6,22 +6,22 @@ int main()
 {
 
    // char *p = NULL;
-    char str1[BUFFER_SIZE] = "hello world";
+    char str1[BUFFER_SIZE] = "";
 
-    int len = MyStrlen(str1);
+    int len = myStrlen(str1);
     printf("len:%d\n", len);
 
     char str2[BUFFER_SIZE] = "";
 
-    MyStrcpy(str2,str1);
+    myStrcpy(str2,str1);
     printf("str2:%s\n",str2);
 
-    MyStrcat(str2,str1);
+    myStrcat(str2,str1);
     printf("str1:%s\n", str1);
     printf("str1:%s\n", str2);
 
-    MyStrcmp(str1, str2);
-    printf("MyStrcmp:%d\n", MyStrcmp(str1, str2));
+    myStrcmp(str1, str2);
+    printf("myStrcmp:%d\n", myStrcmp(str1, str2));
     return 0;
 }
 
