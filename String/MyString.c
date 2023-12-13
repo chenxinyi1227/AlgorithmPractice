@@ -8,14 +8,14 @@ int MyStrlen(const char *str)
     {
         return count;
     }
-    while (*str != '\0')//判断字符是否为\0,不是\0就自增，count也自增记录个数
+    while (*str != '\0')
 	{
 		str++;
         count++;
 	}
     return count;
 }
-void MyStrcpy(char *dest, const char *src)
+void  MyStrcpy(char *dest, const char *src)
 {
 #if 0  
      int len = MyStrlen(src);
