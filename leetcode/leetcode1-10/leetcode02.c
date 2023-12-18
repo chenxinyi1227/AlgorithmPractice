@@ -75,14 +75,14 @@ void BubbleSort(int *nums, int len)
 }
 
 //选择排序
-void InsertSort(int *nums, int len)
+void selection_Sort(int *nums, int len)
 {
     for(int i = 0; i< len - 1 ; i++)
     {
-        int min = i;
-        for(int j = i + 1; j < len; j++)
+        int min = i;//记录最小值
+        for(int j = i + 1; j < len; j++)//访问未排序的元素
         {
-            if(nums[j] < nums[min])
+            if(nums[j] < nums[min])//找到目前最小值
             {
                 min = j;
             }
@@ -90,10 +90,11 @@ void InsertSort(int *nums, int len)
         if(min != i)
         {
             int temp = nums[min];
-            nums[i] = nums[min];
+            nums[min] = nums[i];
             nums[i] = temp;
         }
     }
+    
 }
 
 int main()

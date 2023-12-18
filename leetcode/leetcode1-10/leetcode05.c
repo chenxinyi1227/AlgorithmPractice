@@ -17,7 +17,7 @@ int *mergeOrderNum(int *nums1, int nums1Size, int *nums2, int nums2Size, int * n
         printf("malloc error!\n");
         return NULL;
     }
-
+   
     int idx1 = 0;
     int idx2 = 0;
     int pos = 0;
@@ -29,31 +29,31 @@ int *mergeOrderNum(int *nums1, int nums1Size, int *nums2, int nums2Size, int * n
         }
         else
         {
-            newArray[pos] = nums1[idx2++];
+            newArray[pos] = nums2[idx2++];
         }
         pos++;
     }/* idx1 == num1Size || idx2 = num2Size 就跳出循环 */
 
-    
     if(idx1 == nums1Size)
     {
         /* 这个是num1循环结束了 */
-        for(int idx = idx1; idx <nums2Size; idx++)
+        for(int idx = idx2; idx <nums2Size; idx++)
         {
             newArray[pos++] = nums2[idx2++];
         }
     }
-    else if(idx1 == nums2Size)
+    else if(idx2 == nums2Size)
     {
         /* 这个是num2循环结束了 */
-        for(int idx = idx1; idx <nums2Size; idx++)
+        for(int idx = idx1; idx < nums1Size; idx++)
         {
-            newArray[pos++] = nums2[idx1++];
+            newArray[pos++] = nums1[idx1++];
         }
     }
     *newSize = arrLen;
     return newArray;
-    return 0;
+    //return 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               free(newArray);
 
     
 }
