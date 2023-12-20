@@ -53,7 +53,7 @@ int *mergeOrderNum(int *nums1, int nums1Size, int *nums2, int nums2Size, int * n
     *newSize = arrLen;
     return newArray;
     //return 0;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               free(newArray);
+  //  free(newArray);
 
     
 }
