@@ -1,7 +1,7 @@
 #ifndef _LINKLIST_H_
 #define _LINKLIST_H_
   
-#define ELEMENTTYPE int
+#define ELEMENTTYPE void *
 
 /* 链表节点数据类型定义 */
 typedef struct linkNode
@@ -22,11 +22,11 @@ typedef struct  linkList
 int linkListInit(linkList **pList);
 
 /* 头插 */
-int linkListInsertHead(linkList *pList);
+int linkListInsertHead(linkList *pList, ELEMENTTYPE nodeData);
 /* 尾插 */
-int linkListInsertTail(linkList *pList);
+int linkListInsertTail(linkList *pList, ELEMENTTYPE nodeData);
 /* 指定位置插 */
-int linkListInsertByPos(linkList *pList, int pos);
+int linkListInsertByPos(linkList *pList, int pos, ELEMENTTYPE nodeData);
 
 /* 链表删除 */
 /* 头删 */
@@ -36,14 +36,16 @@ int linkLisDelTail(linkList *pList);
 /* 按位置删 */
 int linkListDelByPos(linkList *pList, int pos);
 
-/* 链表更改 */
-int linkListModify(linkList *pList, int pos);
+/* 删除指定数据 */
+int linkListDelAppointData(linkList *pList, ELEMENTTYPE nodeData, int(*compare)(ELEMENTTYPE pvData1, ELEMENTTYPE pvData2));
 
-/* 链表查询 */
+/* 获取链表大小 */
+int LinkListGetLength(linkList *pList, int *pLength);
 
-/* 链表删除 */
+/* 销毁链表 */
+int LinkListDestory(linkList *pList);
 
 /* 获取链表数据 */
-
+int linkListGetData(linkList *pList, int(*printFunc)(ELEMENTTYPE));
 
 #endif
