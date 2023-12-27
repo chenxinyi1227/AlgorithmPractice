@@ -13,13 +13,12 @@ int main(void)
 {
 	int i = 0, j, k, m, n, t;
 	int len;
-	char a[101];
-	gets(a);          //初始化数组a
+	char a[] = "l am from nanjing";//初始化数组a
  
 	len = strlen(a);   //计算a的长度
 	n = len;
  
-	  while(i<n)       //翻转整个字符串
+	while(i<n)       //翻转整个字符串
 	{
 		m = a[i];
 		a[i] = a[n - 1];
@@ -47,8 +46,8 @@ int main(void)
 			k = t + 1;
 			j = k;
 		}
- 
- if (j == (n-1) )   //进行第一个单词的翻转
+
+ 		if (j == (n-1) )   //进行第一个单词的翻转
 		{
 			t = j;
 			while (k < j)   //单词内部进行翻转
@@ -62,10 +61,9 @@ int main(void)
 			k = t + 1;
 			j = k;
 		}
- 
 	}
  
-	puts(a);    //输出字符串
+printf("str3:%s\n", a);    //输出字符串
  
 	return 0;
 }
