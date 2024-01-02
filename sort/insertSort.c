@@ -13,6 +13,10 @@ void printArray(int *nums, int length)
 
 void insertSort(int *nums, int numsSize)
 {
+    if(nums == NULL)
+    {
+        return;
+    }
     for(int idx = 1; idx < numsSize; idx++)
     {
         int temp = nums[idx];//复制

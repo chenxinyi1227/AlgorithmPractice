@@ -16,7 +16,7 @@ void printArray(int *array, int length)
         printf("array[%d] = %d\n", idx, array[idx]);
     }
 }
-#if 1
+#if 0
 /* 选择排序O(n^2):相较于冒泡排序，减少了排序次数
 对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。 */
 int selectSort(int *array, int length)
