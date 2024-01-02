@@ -13,6 +13,10 @@ void swap(int *val1, int *val2)
 /* 时间复杂度：O(n^2) */
 void bubbleSort01(int *array, int length)
 {
+    if(array == NULL)
+    {
+        return;
+    }
     for(int end = length; end > 0; end--)
     {
         for(int begin = 1; begin < end; begin++)
@@ -29,6 +33,10 @@ void bubbleSort01(int *array, int length)
 /* 优化1:当剩余数列已经有序时，则不需要在对后面的循环进行判断 */
 void bubbleSort02(int *array, int length)
 {
+    if(array == NULL)
+    {
+        return;
+    }
     int sorted = 1; //已经排好序
     for(int end = length; end > 0; end--)
     {
@@ -53,6 +61,11 @@ void bubbleSort02(int *array, int length)
 /* 优化2*/
 void bubbleSort03(int *array, int length)
 {
+    if(array == NULL)
+    {
+        return;
+    }
+
     int sortedIndex = 0;
     for(int end = length; end > 0; end--)
     {
@@ -73,12 +86,41 @@ void bubbleSort03(int *array, int length)
     } 
 }
 
+/* 优化3 */
+void BubbleSort(int *arr,int len)
+{
+    if(arr == NULL)
+    {
+        return;
+    }
+    //冒泡冒n-1次
+    for(int i = 0;i < len - 1; i++)
+    {
+        int flag = 0;
+        for(int j = 0; j < len - 1 - i; j++)//将剩下的（length-i）个记录进行比较
+        {
+            if(arr[j] > arr[j+1])
+            {
+                flag = 1;
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+        //序列已经有序
+        if(flag==0)
+        {
+            break;
+        }
+    }
+}
+
 /* 数组做函数参数会自动弱化成指针 */
 int printArray(int *array, int length)
 {
     for(int idx = 0; idx < length; idx++)
     {
-        printf("array[%d] = %d\n", idx, array[idx]);
+        printf("array[%d] = %d ", idx, array[idx]);
     }
 }
 
@@ -88,6 +130,6 @@ int main()
     int length = sizeof(array) / sizeof(array[0]);
     // bubbleSort01(array, length);
     // bubbleSort02(array, length);
-    bubbleSort03(array, length);
+    BubbleSort(array, length);
     printArray(array, length);
 }
