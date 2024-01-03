@@ -54,10 +54,16 @@ int main()
     printf("size:%d\n", size);
     doubleLinkListForeach(list, printBasicData1);
     printf("\n");
-
-    
-    doubleLinkListDelTail(list);
-    // doubleLinkListDelByPos(list, pos);//指定位置删除
+        
+    {
+        doubleLinkListDelTail(list);
+        // doubleLinkListDelByPos(list, pos);//指定位置删除
+        doubleLinkListForeach(list, printBasicData1);
+        printf("\n");
+    }
+   
+    int val = 3;
+    doubleLinkListDelAppointData(list, &val, compare);
     doubleLinkListForeach(list, printBasicData1);
     printf("\n");
 

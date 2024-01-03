@@ -7,7 +7,8 @@ enum  STATUS_CODE
 {
     NULL_PTR,
     MALLOC_ERROR,
-    INVALID_ACCESS
+    INVALID_ACCESS,
+    NOT_FIND
 };
 
 /* 宏函数 */
@@ -179,19 +180,41 @@ int doubleLinkListDelByPos(doubleLinkList *pList, int pos)
 
     return ret;
 }
+/* 根据元素获取下标 */
+static int getIndexByVal(doubleLinkList *pList, ELEMENTTYPE nodeData,int *pos, int(*compare)(ELEMENTTYPE pvData1, ELEMENTTYPE pvData2))
+{
 
+    int ret = 0;
+    int Pos = 1;
+    doubleLinkNode * travelNode = pList->pHead->next;
+    int cmp = 0;
+    while(travelNode != NULL)
+    {
+        cmp = compare(travelNode->data, nodeData);
+        if(cmp == 0)
+        {
+            *pos = Pos;
+            return Pos;
+        }
+        travelNode = travelNode->next;
+        Pos++;//错误1:pos/Pos变量命名不能与函数参数相同
+    }
+    /* travelNode = NULL 或 没找到 */
+    *pos = NOT_FIND;
+    return NOT_FIND;
+}
 /* 删除指定数据 */
 int doubleLinkListDelAppointData(doubleLinkList *pList, ELEMENTTYPE nodeData, int(*compare)(ELEMENTTYPE pvData1, ELEMENTTYPE pvData2))
 {
-    doubleLinkNode * travelNode = pList->pHead;
-    while(travelNode != NULL)
+    int ret = 0;
+    int pos = 0;
+    int length = 0;
+    while(doubleLinkListGetLength(pList, &length) && pos != NOT_FIND)//条件需要再思考:链表长度不为0并且pos能找到
     {
-        int cmp = compare(travelNode->data, nodeData);
-        if(!cmp)
-        {
-            
-        }
+        getIndexByVal(pList, nodeData, &pos, compare);
+        doubleLinkListDelByPos(pList, pos);
     }
+    return ret;
 }
 
 /* 获取链表大小 */
@@ -211,8 +234,22 @@ int doubleLinkListGetLength(doubleLinkList *pList, int *pLength)
 /* 销毁链表 */
 int doubleLinkListDestory(doubleLinkList *pList)
 {
+    int ret = 0;
+    int length = 0;
+    while(length)
+    { 
+        doubleLinkListGetLength(pList, &length);
+        doubleLinkListDelTail(pList);
+    }
 
-}
+    if(pList->pHead != NULL)
+    {
+        free(pList->pHead);//初始化为头指针开辟了空间
+        pList->pHead = NULL;
+        pList->pTail = NULL;
+    }
+    return ret;
+}   
 
 /* 链表遍历 */
 int doubleLinkListForeach(doubleLinkList *pList, int(*visit)(ELEMENTTYPE))
