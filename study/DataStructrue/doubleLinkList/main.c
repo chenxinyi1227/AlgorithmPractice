@@ -19,8 +19,13 @@ int printStruct(void *arg)
 
 int printBasicData(void *arg)
 {
-    int data = *(int *)arg;
+    int data = *(int *)arg;//int / not void
     printf("data:%d\n", data);
+}
+
+int printBasicData1(void * args)
+{
+    printf("%d ", *(int *)args);
 }
 
 int compare(void *pvData1, void *pvData2)
@@ -36,54 +41,63 @@ int main()
 #if 1
 
     doubleLinkList *list = NULL;
-    linkListInit(&list);    //初始化链表
+    doubleLinkListInit(&list);    //初始化链表
 
 #if 1
     int buffer[BUFFER_SIZE] = {1, 2, 3};
     for(int idx = 0; idx < BUFFER_SIZE; idx++)//插入数据
     {
-        linkListInsertHead(list, (void *)&buffer[idx]);
+        doubleLinkListInsertHead(list, (void *)&buffer[idx]);
     }
     int size = 0;
-    linkListGetLength(list,&size);//获取链表的长度
+    doubleLinkListGetLength(list,&size);//获取链表的长度
     printf("size:%d\n", size);
-    linkListForeach(list, printBasicData);
+    doubleLinkListForeach(list, printBasicData1);
+    printf("\n");
 
-    {
-        printf("\n测试按指定位置插入\n");
-        int val = 4;
-        linkListInsertByPos(list, 1, &val);//按指定位置插入
-        linkListForeach(list, printBasicData);
-        printf("\n测试头插\n");
-        int val1 = 0;
-        linkListInsertHead(list, &val1);
-        linkListForeach(list, printBasicData);
-        printf("\n测试尾插\n");
-        int val2 = 9;
-        linkListInsertTail(list, &val2);
-        linkListForeach(list, printBasicData);
-    }
-
-    {
-        printf("\n测试头删\n");
-        linkListDelHead(list);
-        linkListForeach(list, printBasicData);
-        printf("\n测试尾删\n");
-        linkLisDelTail(list);
-        linkListForeach(list, printBasicData);
-        int pos = 2;
-        printf("\n测试删除指定位置%d\n", pos);
-        linkListDelByPos(list, pos);//指定位置删除
-        linkListForeach(list, printBasicData);
-    }
     
-    {
-        int val = 0;
-        printf("\n测试删除指定元素:%d\n", val);
-        linkListDelAppointData(list, &val, compare);
-        linkListForeach(list, printBasicData);
-    }
+    doubleLinkListDelTail(list);
+    // doubleLinkListDelByPos(list, pos);//指定位置删除
+    doubleLinkListForeach(list, printBasicData1);
+    printf("\n");
 
+
+    #if 0
+        {
+            printf("\n测试按指定位置插入\n");
+            int val = 4;
+            linkListInsertByPos(list, 1, &val);//按指定位置插入
+            linkListForeach(list, printBasicData);
+            printf("\n测试头插\n");
+            int val1 = 0;
+            linkListInsertHead(list, &val1);
+            linkListForeach(list, printBasicData);
+            printf("\n测试尾插\n");
+            int val2 = 9;
+            linkListInsertTail(list, &val2);
+            linkListForeach(list, printBasicData);
+        }
+
+        {
+            printf("\n测试头删\n");
+            linkListDelHead(list);
+            linkListForeach(list, printBasicData);
+            printf("\n测试尾删\n");
+            linkLisDelTail(list);
+            linkListForeach(list, printBasicData);
+            int pos = 2;
+            printf("\n测试删除指定位置%d\n", pos);
+            linkListDelByPos(list, pos);//指定位置删除
+            linkListForeach(list, printBasicData);
+        }
+        
+        {
+            int val = 0;
+            printf("\n测试删除指定元素:%d\n", val);
+            linkListDelAppointData(list, &val, compare);
+            linkListForeach(list, printBasicData);
+        }
+    #endif
 #else
     stuInfo stu1, stu2, stu3;
     memset(&stu1, 0, sizeof(stu1));
@@ -121,5 +135,7 @@ int main()
 //     }
     #endif
 #endif
+
+
     return 0;
 }

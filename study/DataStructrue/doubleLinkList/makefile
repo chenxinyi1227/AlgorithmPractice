@@ -5,5 +5,5 @@ test:${src}
 g:${src}
 	gcc -g ${src} -o gtest
 
-clear:
+clean:
 	@rm -rf test gtest

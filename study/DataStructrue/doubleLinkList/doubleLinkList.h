@@ -33,7 +33,7 @@ int doubleLinkListInsertByPos(doubleLinkList *pList, int pos, ELEMENTTYPE nodeDa
 /* 头删 */
 int doubleLinkListDelHead(doubleLinkList *pList);
 /* 尾删 */
-int linkLisDelTail(doubleLinkList *pList);
+int doubleLinkListDelTail(doubleLinkList *pList);
 /* 按位置删 */
 int doubleLinkListDelByPos(doubleLinkList *pList, int pos);
 
