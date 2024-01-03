@@ -54,7 +54,7 @@ int main()
     printf("size:%d\n", size);
     doubleLinkListForeach(list, printBasicData1);
     printf("\n");
-        
+#if 0       
     {
         doubleLinkListDelTail(list);
         // doubleLinkListDelByPos(list, pos);//指定位置删除
@@ -66,8 +66,17 @@ int main()
     doubleLinkListDelAppointData(list, &val, compare);
     doubleLinkListForeach(list, printBasicData1);
     printf("\n");
+#endif
 
-
+    int *pVal1 = NULL;
+    doubleLinkListGetAppointPosVal(list, 2, (void*)&pVal1);
+    printf("pVal1:%d\n", *pVal1);
+    int *pVal2 = NULL;
+    doubleLinkListGetHeadVal(list, (void*)&pVal2);
+    printf("pVal2:%d\n", *pVal2);
+     int *pVal3 = NULL;
+    doubleLinkListGetTailVal(list, (void*)&pVal3);
+    printf("pVal2:%d\n", *pVal3);
     #if 0
         {
             printf("\n测试按指定位置插入\n");

@@ -271,3 +271,37 @@ int doubleLinkListForeach(doubleLinkList *pList, int(*visit)(ELEMENTTYPE))
     }
     return ret;
 }
+
+/* 获取链表头位置的值 */
+int doubleLinkListGetHeadVal(doubleLinkList *pList, ELEMENTTYPE *pVal)
+{
+    doubleLinkListGetAppointPosVal(pList, 1, pVal);//0->1
+}
+
+/* 获取链表尾位置的值 */
+int doubleLinkListGetTailVal(doubleLinkList *pList, ELEMENTTYPE *pVal)
+{
+    doubleLinkListGetAppointPosVal(pList, pList->len, pVal);
+}
+
+/* 获取链表指定的值 */
+int doubleLinkListGetAppointPosVal(doubleLinkList *pList, int pos, ELEMENTTYPE *pVal)
+{
+    ISNULL(pList);
+    ISVALID(pList, pos);
+    int ret = 0;
+    doubleLinkNode * travelNode = pList->pHead;
+    if(pos == pList->len)
+    {
+        *pVal = pList->pTail->data;
+    }
+    else
+    {
+        while(pos--)
+        {
+            travelNode = travelNode->next;
+        }
+        *pVal = travelNode->data;//pos = -1 
+    }
+    return ret;
+}
