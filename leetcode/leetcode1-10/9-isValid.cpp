@@ -45,7 +45,7 @@ public:
                 }
             }
             /* 指针后移 */
-            *ptr++;
+            ptr++;
         }///字符串遍历结束
         if(mystack.empty())
         {
