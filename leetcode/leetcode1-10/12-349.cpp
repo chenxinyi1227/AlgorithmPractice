@@ -3,19 +3,22 @@ using namespace std;
 #include <vector>
 #include <queue>
 #include <algorithm>//排序
+#include <set>
 /*  两个数组的交集
 给定两个数组 nums1 和 nums2 ，返回 它们的交集 。输出结果中的每个元素一定是 唯一 的。我们可以 不考虑输出结果的顺序 。
-*/
+*///1、暴力 2、排序
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-#if 0
+#if 1
 
 class Solution {
 public:
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) 
     {
-  
+        set<int> myset;
+        
+        
     }
 };
 #else
@@ -72,13 +75,14 @@ int main()
     int nums2Size = sizeof(nums2) / sizeof(nums2[0]);
 
     int newSize = 0; 
+    #if 0
     int *array = intersection(nums1, nums1Size, nums2, nums2Size, &newSize);
     for(int index = 0; index < newSize; index++)
     {
         printf(" %d",array[index]);
     }
     printf("\n");
-
+    #endif
 
 #endif
     return 0;

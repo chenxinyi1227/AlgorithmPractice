@@ -29,3 +29,28 @@ public:
         return head;
     }
 };
+
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) 
+    {
+        ListNode*prev = head;
+        ListNode*travel = head->next;
+
+        while(travel != NULL)
+        {
+            if(prev->val == travel->val)
+            {
+                travel = travel->next;
+            }
+            else
+            {
+                prev->next = travel;
+                prev = travel;
+                travel = travel->next;
+            }
+        }
+        prev->next = travel;
+        return head;
+    }
+};
