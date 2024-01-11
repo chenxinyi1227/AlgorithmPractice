@@ -10,7 +10,7 @@ using namespace std;
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-#if 1
+#if 0
 
 class Solution {
 public:
@@ -29,6 +29,7 @@ int cmp(const void *a, const void *b)
 
 int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* returnSize) 
 {
+    #if 0
     // qsort(nums1, nums1Size, sizeof(int), cmp); 
     // qsort(nums2, nums2Size, sizeof(int), cmp);
     int pos = 0;
@@ -58,6 +59,9 @@ int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* ret
         array[index] = myvec[index];
     }
     return array;
+#else
+    
+#endif
 }
 
 
