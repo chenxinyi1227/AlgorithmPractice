@@ -16,8 +16,22 @@ class Solution {
 public:
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) 
     {
-        set<int> myset;
-        
+        // set<int> myset;
+         vector<int> res;
+        if(nums1 == NULL || nums1.length == 0 || nums2 == null || arr2.nums2 == 0) {
+            return res;
+        }
+        sert
+        for(int i = 0;i < arr.length;i ++) {
+            int temp = arr[i];
+            for(int j = 0;j < arr.length;j ++) {
+                if(arr2[j] == temp && !res.contains(temp)) {
+                    res.add(temp);
+                    break;
+                }
+            }
+        }
+        return res;
         
     }
 };

@@ -10,8 +10,5 @@
 struct ListNode* sortList(struct ListNode* head) 
 {
     struct ListNode *iNode = head;
-    for(iNode != NULL)
-    {
 
-    }
 }

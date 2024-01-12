@@ -61,7 +61,7 @@ public:
 };
 
 #endif
-#if 0
+#if 1
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
