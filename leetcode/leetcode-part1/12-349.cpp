@@ -10,53 +10,19 @@ using namespace std;
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-#if 0
-
 class Solution {
 public:
-    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) 
-    {
-        // set<int> myset;
-         vector<int> res;
-        if(nums1 == NULL || nums1.length == 0 || nums2 == null || arr2.nums2 == 0) {
-            return res;
-        }
-        sert
-        for(int i = 0;i < arr.length;i ++) {
-            int temp = arr[i];
-            for(int j = 0;j < arr.length;j ++) {
-                if(arr2[j] == temp && !res.contains(temp)) {
-                    res.add(temp);
-                    break;
-                }
-            }
-        }
-        return res;
-        
-    }
-};
-#else
-int cmp(const void *a, const void *b) 
-{
-    return *(int *)a - *(int *)b;
-}
-
-int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* returnSize) 
-{
-    #if 0
-    // qsort(nums1, nums1Size, sizeof(int), cmp); 
-    // qsort(nums2, nums2Size, sizeof(int), cmp);
-    int pos = 0;
-    vector<int> myvec;
-    for(int idx1 = 0; idx1 < nums1Size; idx1++)
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+     vector<int> myvec;
+    for(int idx1 = 0; idx1 < nums1.size(); idx1++)
     {
         if(nums1[idx1] == nums1[idx1 + 1])
         {
             idx1++;
         }
-        for(int idx2= 0; idx2 < nums2Size; idx2++)
+        for(int idx2= 0; idx2 < nums2.size(); idx2++)
         {
-            if(nums2[idx2] == nums2[idx2 + 1])
+            if(nums1[idx2] == nums1[idx2 + 1])
             {
                 idx2++;
             }
@@ -65,23 +31,11 @@ int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* ret
                 myvec.push_back(nums1[idx1]);
             }
         }
-    }   
-    *returnSize = myvec.size();
-    int *array = (int *)malloc(sizeof(int) * myvec.size());
-    for(int index = 0; index < myvec.size(); index++)
-    {
-        array[index] = myvec[index];
+    }    
+    return myvec;
     }
-    return array;
-#else
-    
-#endif
-}
 
-
-
-#endif
-
+};
 
 int main()
 {
