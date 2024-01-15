@@ -12,10 +12,39 @@ using namespace std;
      偷窃到的最高金额 = 1 + 3 = 4 。 */
 class Solution {
 public:
-    int rob(vector<int>& nums) {
+    int rob(vector<int>& nums) 
+    {
+        // 先获取全部房间的总数
+        int n = nums.size();
 
+        // 如果数组为空，表示没有房间，那么自然偷不到东西，直接返回 0
+        if(n == 0) return 0;
+
+        // 如果数组只有 1 个元素，表示只有 1 个房间，那么只能偷这个房间的东西，直接返回这个房间的金额
+        if(n == 1) return nums[0];
+
+        // 设置一个数组 value 用来存放前 n 个房间可以偷取的最大金额
+        // value[0] 表示前 0 个房间可以偷取的最大金额
+        // value[1] 表示前 1 个房间可以偷取的最大金额
+        // value[i] 表示前 i 个房间可以偷取的最大金额
+        vector<int> value( n + 1 );
+
+        // value[0] 表示前 0 个房间可以偷取的最大金额
+        // 0 个房间自然偷不到东西，所以存放结果为 0
+        value[0] = 0;
+
+        // value[1] 表示前 1 个房间可以偷取的最大金额
+        // 只有 1 个房间，那么只能偷这个房间的东西，所以存放结果为这个房间的金额
+        value[1] = nums[0];
+
+        // 从 i = 2 直到 i = n，value 中存放的结果由前 i - 2 和 i - 1 共同决定
+        for(int i = 2 ; i <= n ; i++){
+
+            // 转移方程：value[i] 等于 value[ i - 1 ]  和 value[ i - 2 ] + num[ i - 1] 中的较大值
+            value[i] = max(value[i - 1] ,value[i - 2] + nums[i - 1]);
+        }
+
+        // 最后返回 value 的最后一个值
+        return value[n];
     }
 };
-int rob(int* nums, int numsSize) {
-    
-}
