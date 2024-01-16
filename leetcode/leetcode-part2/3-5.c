@@ -15,7 +15,8 @@ public:
     }
 };
 #else
-char* longestPalindrome(char* s) {
+char* longestPalindrome(char* s) 
+{
     
 }
 #endif
