@@ -38,7 +38,8 @@ public:
         value[1] = nums[0];
 
         // 从 i = 2 直到 i = n，value 中存放的结果由前 i - 2 和 i - 1 共同决定
-        for(int i = 2 ; i <= n ; i++){
+        for(int i = 2 ; i <= n ; i++)
+        {
 
             // 转移方程：value[i] 等于 value[ i - 1 ]  和 value[ i - 2 ] + num[ i - 1] 中的较大值
             value[i] = max(value[i - 1] ,value[i - 2] + nums[i - 1]);
