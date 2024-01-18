@@ -30,7 +30,8 @@ public:
         dp[2] = 2;
 
         // 从 3 开始循环至 n，计算 dp[3] 至 dp[n]
-        for(int i = 3; i <= n; i++) {
+        for(int i = 3; i <= n; i++) 
+        {
             // 第 i 级台阶的结果 dp[i] 等于第 i-1 和 i-2 的结果之和
             dp[i] = dp[i - 1] + dp[i - 2];
         }
