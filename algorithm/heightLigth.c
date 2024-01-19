@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int main(){
+int main()
+{
     #if 1
     printf("\033[1;31m这是红色的文本。\033[0m\n"); // 红色字体
     printf("\033[1;32m这是绿色的文本。\033[0m\n"); // 绿色字体
@@ -23,7 +24,8 @@ int main(){
     #else
 
     int i;
-    for (i = 0; i < 20; i++) {
+    for (i = 0; i < 20; i++) 
+    {
         // 移动光标位置到第一行第一列
         printf("\033[1;1H");
         // 输出高亮块
