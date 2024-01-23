@@ -13,13 +13,18 @@
 #define MAX_LISTEN  128
 #define LOCAL_IPADDRESS "127.0.0.1"
 
-int sockfd;
+int sockfd;//连接
 void server_exit(int sig)
 {
-    if(sig == SIGINT)
+    if(sig == SIGPIPE)
     {
         shutdown(sockfd, SHUT_RDWR);
         printf("server exit\n");
+    }
+    else
+    {
+        shutdown(sockfd, SHUT_RDWR);
+        exit(-1);
     }
 }
 
@@ -33,8 +38,11 @@ int main()
     5、accept:处理请求(阻塞) -- 连接套接字（收发数据）
     6、recv/send:接受发送数据（SIGPIPE忽略）
     7、shutdown:关闭连接
+    sockfd//连接   cfd//通信
     */
-   signal(SIGINT, server_exit);
+   signal(SIGPIPE, SIG_IGN);
+   signal(SIGINT, server_exit);//
+
 
    //1
     sockfd = socket(AF_INET,SOCK_STREAM, 0);
@@ -96,17 +104,41 @@ int main()
         //ntoa:
         printf("info client : ip = %s, port:%d\n", inet_ntoa(c_addr.sin_addr), ntohs(c_addr.sin_port));
 
-        /* 收发数据 */
+        /* 接收数据 */
         char message[BUFFER_SIZE] = {0};
         int retRecv = recv(cfd, message, sizeof(message) - 1, 0);
+        int retRead;
         if(retRecv == -1)
         {
             perror("recv massage error");
             exit(-1);
         }
-        printf("client to msg:%d\n", message);
+        //recv = 0, 代表对应的客户端退出
+        if(retRecv  == 0)
+        {
+            printf("client is close@\n");
+        }
+        else
+        {
+            printf("send to msg :%d\n", message);
+            //发两次就会产生信号
+            while(1)
+            {
+                //发送数据
+                memset(message, 0, sizeof(message));
+                scanf("%s", message);
+                retRead = send(cfd, message, strlen(message), 0);//0阻塞式发送
+                // retRead = send(cfd, message, strlen(message), MSG_NOSIGNAL);//忽略SIGPIPE信号
+
+                if(retRead < 0)
+                {
+                    perror("send data error");
+                    exit(-1);
+                }
+                printf("send to msg successfully ! size:%d\n", retRead);
+            }
+        }
         shutdown(cfd, SHUT_RDWR);//关掉读写
-        shutdown(sockfd, SHUT_RDWR);//关掉读写
     }
     return 0;
 }
