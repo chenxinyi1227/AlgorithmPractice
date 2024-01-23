@@ -44,11 +44,19 @@ int main()
         exit(-1);
     }
 
+    /* 端口复用 */
+    int opt = 1;
+    int retOpt = setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, (void *)&opt, sizeof(opt));
+    if(retOpt == -1)
+    {
+        perror("setsockopt error");
+        exit(-1);
+    }
     //2
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;//地址族TCP
     addr.sin_port = htons(8080);//端口号
-    addr.sin_addr.s_addr = htonl(INADDR_ANY);//IP
+    addr.sin_addr.s_addr = INADDR_ANY;//IP
     // addr.sin_addr.s_addr = inet_addr("172.18.188.222");
     // addr.sin_addr.s_addr = htonl("192.168.1.105");
 
