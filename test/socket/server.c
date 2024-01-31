@@ -64,7 +64,7 @@ int main()
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;//地址族TCP
     addr.sin_port = htons(8080);//端口号
-    addr.sin_addr.s_addr = INADDR_ANY;//IP
+    addr.sin_addr.s_addr = htonl(INADDR_ANY);//IP
     // addr.sin_addr.s_addr = inet_addr("172.18.188.222");
     // addr.sin_addr.s_addr = htonl("192.168.1.105");
 
@@ -88,55 +88,70 @@ int main()
 
     //5 获取连接请求并建立连接 
     //返回的是新的套接字描述符 可以与客户端通信
+    printf("accepting...\n");
     struct sockaddr_in c_addr;//客户端的IP
     memset(&c_addr, 0, sizeof(c_addr));
+    socklen_t size = sizeof(c_addr);
 
-    socklen_t size = sizeof(struct sockaddr_in);
-    int cfd = accept(sockfd, (struct sockaddr *)&c_addr, &size);//cfd新的套接字描述符
-    //cfd连接套接字：每连接一个客户端成功，就会生成一个描述符，只要知道这个描述符，就能够与客户端通信
-    if(cfd == -1)
-    {
-        perror("accept error");
-        exit(-1);
-    }
-    //ntoa:
-    printf("info client : ip = %s, port:%d\n", inet_ntoa(c_addr.sin_addr), ntohs(c_addr.sin_port));
+    char buffer[BUFFER_SIZE] = {0};//发送缓冲区
+    char relaybuffer[BUFFER_SIZE] = {0};//发送缓冲区
+    int recvLen = 0;//接收长度
 
-    /* 接收数据 */
-    char message[BUFFER_SIZE] = {0};
-    int retRecv = recv(cfd, message, sizeof(message) - 1, 0);
-    int retRead;
-    if(retRecv == -1)
+    //循环处理线程
+    while(1)
     {
-        perror("recv massage error");
-        exit(-1);
-    }
-    //recv = 0, 代表对应的客户端退出
-    if(retRecv  == 0)
-    {
-        printf("client is close@\n");
-    }
-    else
-    {
-        printf("send to msg :%d\n", message);
-        //发两次就会产生信号
-        while(1)
+        int cfd = accept(sockfd, (struct sockaddr *)&c_addr, &size);//cfd新的套接字描述符
+        //cfd连接套接字：每连接一个客户端成功，就会生成一个描述符，只要知道这个描述符，就能够与客户端通信
+        if(cfd == -1)
         {
-            //发送数据
-            memset(message, 0, sizeof(message));
-            scanf("%s", message);
-            retRead = send(cfd, message, strlen(message), 0);//0阻塞式发送
-            // retRead = send(cfd, message, strlen(message), MSG_NOSIGNAL);//忽略SIGPIPE信号
-
-            if(retRead < 0)
-            {
-                perror("send data error");
-                exit(-1);
-            }
-            printf("send to msg successfully ! size:%d\n", retRead);
+            perror("accept error");
+            exit(-1);
         }
-    }
+        //ntoa:
+        printf("info client : ip = %s, port:%d\n", inet_ntoa(c_addr.sin_addr), ntohs(c_addr.sin_port));
+
+#if 0
+        /* 接收数据 */
+        char message[BUFFER_SIZE] = {0};
+        int retRecv = recv(cfd, message, sizeof(message) - 1, 0);
+        int retRead;
+        if(retRecv == -1)
+        {
+            perror("recv massage error");
+            exit(-1);
+        }
+        //recv = 0, 代表对应的客户端退出
+        if(retRecv  == 0)
+        {
+            printf("client is close@\n");
+        }
+        else
+        {
+            printf("send to msg :%s\n", message);
+            //发两次就会产生信号
+            while(1)
+            {
+                //发送数据
+                memset(message, 0, sizeof(message));
+                scanf("%s", message);
+                retRead = send(cfd, message, strlen(message), 0);//0阻塞式发送
+                // retRead = send(cfd, message, strlen(message), MSG_NOSIGNAL);//忽略SIGPIPE信号
+
+                if(retRead < 0)
+                {
+                    perror("send data error");
+                    exit(-1);
+                }
+                printf("send to msg successfully ! size:%d\n", retRead);
+            }
+        }
+    #endif
+    //开线程
+    // threadPoolAddTask(&poll, threadFunc, (void*)&cfd);
     shutdown(cfd, SHUT_RDWR);//关掉读写
+}
+    
+    
     
     return 0;
 }
