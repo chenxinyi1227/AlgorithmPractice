@@ -38,6 +38,11 @@ int main()
     const char *str1 = json_object_get_string(json12);
     printf("str1:%s\n", str1);
 
+    //获取type
+    struct json_object * json13 = json_object_object_get(jsonObj,"李");
+    const char *str1 = json_object_get_string(json12);
+    printf("str1:%s\n", str1);
+
     /* 将json_object内容转换json格式字符串，其中可能含有转义符。 */
     const char *obj = json_object_to_json_string(jsonObj);
     printf("obj:%s\n", obj);
@@ -142,6 +147,11 @@ int main()
     printf("my_array:%s\n", ptr2);
 
     json_object_put(my_object);
+    #endif
+
+    #if 0
+    json_object_from_file();//从文件
+    json_object_get_type();//获取类型
     #endif
     return 0;
 } 

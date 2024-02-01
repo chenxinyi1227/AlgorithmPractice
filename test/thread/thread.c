@@ -40,9 +40,11 @@ void *thread_fun_2(void *arg)
     while(1)
     {
         pthread_mutex_lock(&g_mutex);
-        write(fd, "yeliang", strlen("yeliang"));
-        write(fd, "****", 4);
-        write(fd, "\n", 1);
+        // write(fd, "yeliang", strlen("yeliang"));
+        // write(fd, "****", 4);
+        // write(fd, "\n", 1);
+        printf("nihao1");
+        
         pthread_mutex_unlock(&g_mutex);
     }
 }

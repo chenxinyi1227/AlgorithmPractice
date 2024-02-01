@@ -8,6 +8,10 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <signal.h>
+#include <sys/select.h>
+#include <sys/time.h>
+#include <sys/epoll.h>
+#include <fcntl.h>
 
 #define BUFFER_SIZE 1024
 #define MAX_LISTEN  128
@@ -60,8 +64,12 @@ int main()
         perror("setsockopt error");
         exit(-1);
     }
+
+
+
     //2
     struct sockaddr_in addr;
+    memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;//地址族TCP
     addr.sin_port = htons(8080);//端口号
     addr.sin_addr.s_addr = htonl(INADDR_ANY);//IP
@@ -85,6 +93,46 @@ int main()
         exit(-1);
     }
     printf("listen successfully\n");
+
+#if 0
+    //可操作1、select 多路转接
+    fd_set readSet;
+    bzero(&readSet, sizeof(readSet));//文件描述符集合（关于读的集合）
+    // FD_ZERO(&readSet);
+    int maxfd = sockfd;
+
+    FD_SET(sockfd, &readSet);
+
+    //更新集合的备份
+    fd_set tmpreadSet;
+    FD_ZERO(&tmpreadSet);
+
+    while(1)
+    {
+        tmpreadSet = readSet;
+        int retSelect = select(maxfd + 1, &tmpreadSet, NULL, NULL,NULL, 0);
+        if(retSelect == -1)
+        {
+            perror('select error');
+            break;
+        }
+
+        if(FD_ISSET(sockfd, &readSet))
+        {
+            //通信句柄
+            int acceptfd = accept(sockfd, NULL, NULL);
+            if(acceptfd == -1)
+            {
+                perror("accpet error");
+                exit(-1);
+            }
+            FD_SET(acceptfd, &readSet);
+            maxfd = maxfd < acceptfd ? acceptfd : maxfd;
+        }
+
+        //有通信 todo...
+    }
+#endif
 
     //5 获取连接请求并建立连接 
     //返回的是新的套接字描述符 可以与客户端通信
@@ -145,13 +193,10 @@ int main()
                 printf("send to msg successfully ! size:%d\n", retRead);
             }
         }
-    #endif
+  
     //开线程
     // threadPoolAddTask(&poll, threadFunc, (void*)&cfd);
     shutdown(cfd, SHUT_RDWR);//关掉读写
-}
-    
-    
     
     return 0;
 }
