@@ -62,7 +62,7 @@ int main()
         scanf("%s",writebuffer);
         // fgets(writebuffer, sizeof(writebuffer), stdin); // 使用fgets代替scanf
         // writebuffer[strcspn(writebuffer, "\n")] = 0; // 移除fgets读取的换行符
-        printf("%ld\n", strlen(writebuffer));
+      
         //发送消息给服务器
         int retsend = send(sockfd, writebuffer, strlen(writebuffer), 0);
         if(retsend == -1) 
