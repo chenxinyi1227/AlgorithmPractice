@@ -21,8 +21,7 @@
      */
 int main()
 {
-    int sockfd;
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if(sockfd == -1)
     {
         perror("socket falied");
@@ -42,27 +41,57 @@ int main()
         perror("inet_pton error");
         exit(-1);
     }
-
     ret = connect(sockfd, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
     if (ret == -1)
     {
         perror("connect error");
         exit(-1);
     }
-    printf("connect success\n");
 
-    char buffer[BUFFER_SIZE] = {0};
-    //读写 write read
-    printf("请输入消息\n");
-    scanf("%s", buffer);
-    // sprintf(buffer, "chenfdf");
-    write(sockfd, buffer, sizeof(buffer));
+    char recvBuffer[BUFFER_SIZE] = {0};
+    memset(recvBuffer, 0, sizeof(recvBuffer));
+    
+    //写缓冲区
+    char writebuffer[BUFFER_SIZE];
+    memset(writebuffer, 0, sizeof(writebuffer));
 
-    char recvbuffer[BUFFER_SIZE] = {0};
-    read(sockfd, recvbuffer, sizeof(recvbuffer));
-    printf("recvbuffer:%s\n", recvbuffer);
+    while(1)
+    {
+        memset(writebuffer, 0, sizeof(writebuffer));
+        printf("input:");
+        scanf("%s",writebuffer);
+        // fgets(writebuffer, sizeof(writebuffer), stdin); // 使用fgets代替scanf
+        // writebuffer[strcspn(writebuffer, "\n")] = 0; // 移除fgets读取的换行符
+        printf("%ld\n", strlen(writebuffer));
+        //发送消息给服务器
+        int retsend = send(sockfd, writebuffer, strlen(writebuffer), 0);
+        if(retsend == -1) 
+        {
+            perror("send error");
+            exit(-1);
+        }
+        /* 接收回复消息 */
+        memset(recvBuffer, 0, sizeof(recvBuffer));
+        int readBytes = recv(sockfd, recvBuffer, sizeof(recvBuffer) - 1, 0);
+        if(readBytes <= 0)
+        {
+            if(readBytes == 0)
+            {
+                perror("Connection closed by peer");
+                exit(-1);
+            }
+            else
+            {
+                perror("recv error");
+            }
+            close(sockfd);
+            break;
+        }
+        printf("recv:%s\n", recvBuffer);
+    }
+
     sleep(3);
-
-    // close(sockfd);
+    close(sockfd);
     return 0;
+
 }
