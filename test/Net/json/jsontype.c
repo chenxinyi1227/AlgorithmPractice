@@ -33,11 +33,11 @@ int main()
     struct json_object * json11 = json_object_object_get(jsonObj,"陈");
     int val1 = json_object_get_int(json11);
     printf("val:%d\n", val1);
+    
     //取出字符串
     struct json_object * json12 = json_object_object_get(jsonObj,"李");
     const char *str1 = json_object_get_string(json12);
     printf("str1:%s\n", str1);
-
     //获取type
     struct json_object * json13 = json_object_object_get(jsonObj,"李");
     const char *str1 = json_object_get_string(json12);

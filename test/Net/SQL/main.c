@@ -32,7 +32,8 @@ int main()
     res = mysql_use_result(conn);
  
     // 处理查询结果
-    while ((row = mysql_fetch_row(res)) != NULL) {
+    while ((row = mysql_fetch_row(res)) != NULL) 
+    {
         for(int i = 0; i < mysql_num_fields(res); i++) 
         {
             printf("%s ", row[i] ? row[i] : "NULL");

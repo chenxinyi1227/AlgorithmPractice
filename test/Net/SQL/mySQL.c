@@ -77,7 +77,7 @@ int main()
     const char *host = "localhost";
     const char *user = "root";
     const char *passwd = "1234";
-    const char *db = "test";//数据库
+    const char *db = "demo";//数据库
     unsigned int port = 3306;
 
     //建立连接
@@ -100,19 +100,20 @@ int main()
     //创建表格
     char buf[300] = {0};
  
-    #if 0
+    #if 1
     //primary key  主键 auto_increment 自动增长列
-    sprintf(buf, "create table if not exists list1(id int primary key, name varchar(20), age int)");
+    sprintf(buf, "create table if not exists list(id int primary key, name varchar(20), age int)");
+    mysql_real_query(mysql, buf, strlen(buf));
     #else
     //插入数据
-    sprintf(buf, "insert into list1 values(1015,'雪音1', 123)");
-    mysql_real_query(mysql, buf, strlen(buf));
+    sprintf(buf, "insert into list values(1015,'雪音1', 123)");
+    // mysql_real_query(mysql, buf, strlen(buf));
     //删除表
     // sprintf(buf, "drop table if exists list1");
     #endif
-
+  printf("插入成功\n");
     //删除数据
-    sprintf(buf, "delete from list1 where name = '雪音1' ");
+    sprintf(buf, "delete from list where name = '雪音1' ");
     int ret1 = mysql_query(mysql, buf);
     if(ret1 != 0)
     {
@@ -121,7 +122,7 @@ int main()
     }
 
     //排序
-    sprintf(buf, "select * from list1 order by age;");//倒序
+    sprintf(buf, "select * from list order by age;");//倒序
     ret1 = mysql_query(mysql, buf);
     if(ret1 != 0)
     {
@@ -131,10 +132,10 @@ int main()
     printf("order success\n");
     
     //查看相关用户的信息
-    sprintf(buf, "select * from list1;");
+    sprintf(buf, "select * from list");
     ret1 = mysql_real_query(mysql, buf, strlen(buf));
     printf("buf:%s\n", buf);
-
+  
     // int ret1 = mysql_query(mysql, buf);
     if(ret1 != 0)
     {
@@ -196,7 +197,7 @@ int main()
     // int ret1 = mysql_query(mysql, buf);
     if(ret1 != 0)
     {
-      fprintf(stderr, "insert failed: %s\n", mysql_error(mysql));
+      fprintf(stderr, "drop failed: %s\n", mysql_error(mysql));
       return -1;
     }
     printf("删除表成功!\n");

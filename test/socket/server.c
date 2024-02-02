@@ -158,7 +158,6 @@ int main()
         //ntoa:
         printf("info client : ip = %s, port:%d\n", inet_ntoa(c_addr.sin_addr), ntohs(c_addr.sin_port));
 
-#if 0
         /* 接收数据 */
         char message[BUFFER_SIZE] = {0};
         int retRecv = recv(cfd, message, sizeof(message) - 1, 0);
@@ -199,4 +198,5 @@ int main()
     shutdown(cfd, SHUT_RDWR);//关掉读写
     
     return 0;
+}
 }

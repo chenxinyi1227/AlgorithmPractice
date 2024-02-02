@@ -12,8 +12,10 @@
 #include<time.h>
 #include<fcntl.h>
 
-#define MAX 100
-
+#define PORT 8080
+#define SERVER_IP "172.18.188.222"
+#define BUFFER_SIZE 128
+#if 0
 typedef struct Client
 {
     //socket文件描述符
@@ -161,13 +163,13 @@ void receive(int cfd)
     sprintf(client[count].address,"%s/%s%s","./record",client[count].id,".txt");
     client[count].cfd = cfd;
 }
-
+#endif
 //服务端socket初始化
 int inet_init(const char *ip, unsigned short int port)
 {
     //使用TCP/IP(V4)协议
-    int sfd = socket(AF_INET,SOCK_STREAM,0);
-    if(sfd == -1){
+    int sockfd = socket(AF_INET,SOCK_STREAM,0);
+    if(sockfd == -1){
         perror("socket err\n");
         return -1;
     }
@@ -180,36 +182,27 @@ int inet_init(const char *ip, unsigned short int port)
     addr.sin_addr.s_addr = inet_addr(ip);
     socklen_t addrlen = sizeof(addr);
     //将ip地址绑定套接字
-    int ret = bind(sfd,(struct sockaddr*)(&addr), addrlen);
+    int ret = bind(sockfd,(struct sockaddr*)(&addr), addrlen);
     if( ret == -1){
         perror("bind error\n");   
         return -1;
     }
     //监听链接请求队列，accept()应答之前，允许在进入队列中等待的连接数目是10
-    if(listen(sfd,10) == -1)
+    if(listen(sockfd,10) == -1)
     {
         perror("listen error\n");
         return -1;
     }
-    return sfd;
+    return sockfd;
 }
 
-int main(int argc, char *argv[])
+int main()
 {
     const char *ip;
     unsigned short int port;
     //如果没有指定ip地址和端口号，则使用默认ip地址（本机）和端口号
-    if(argc < 3)
-    {
-        ip = "127.0.0.1";
-        port = 533;
-    }else
-    {
-        ip = argv[1];
-        port = atoi(argv[2]);
-    }
 
-    int sfd = inet_init(ip, port);
+    int sfd = inet_init(SERVER_IP, PORT);
     if(sfd == -1)
     {
         perror("server socket init error\n");
@@ -234,7 +227,7 @@ int main(int argc, char *argv[])
             printf("pthread_create: %s\n",strerror(ret));
             continue;
         }
-        printf("有一个客户端成功连接：ip <%s> port [%hu]\n",inet_ntoa(caddr.sin_addr),ntohs(caddr.sin_port));
+        printf("有一个客户端成功连接: ip <%s> port [%hu]\n",inet_ntoa(caddr.sin_addr),ntohs(caddr.sin_port));
     }
     
     return 0;

@@ -10,6 +10,10 @@
 #include<dirent.h>
 #include<sys/stat.h>
 
+#define PORT 8080
+#define SERVER_IP "172.18.188.222"
+#define BUFFER_SIZE 128
+
 //打印历史信息
 void print_history(char *id)
 {
@@ -31,18 +35,8 @@ void print_history(char *id)
     close(fd);
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-    const char *ip;
-    unsigned short int port;
-    //如果没指明，默认是ip = "127.0.0.1",port = 533
-    if(argc < 3){
-        ip = "127.0.0.1";
-        port = 8080;
-    }else{
-        ip = argv[1];
-        port = atoi(argv[2]);
-    }
     int sfd = socket(AF_INET,SOCK_STREAM,0);
     if(sfd == -1){
         perror("socket error\n");
@@ -50,8 +44,8 @@ int main(int argc, char *argv[])
     }
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(port);
-    addr.sin_addr.s_addr = inet_addr(ip);
+    addr.sin_port = htons(PORT);
+    addr.sin_addr.s_addr = inet_addr(INADDR_ANY);
     socklen_t addrlen = sizeof(addr);
 
     int ret = connect(sfd,(const struct sockaddr*)(&addr),addrlen);
