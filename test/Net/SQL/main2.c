@@ -6,6 +6,7 @@
 
 #define TIME_LEN 80
 #define BUFFER_SIZE 1024
+
 //获取当前时间
 char *getCurTime()
 {
@@ -41,12 +42,11 @@ int main()
     }
 
     //建表user
-    sprintf(buffer, "create table if not exists messages(id int primary key auto_increment, sender_name varchar(50), \
-    receiver_name varchar(50), message_text varchar(255))");
+    sprintf(buffer, "create table if not exists users(id int primary key auto_increment, name varchar(20), time varchar(255))");
     int ret = mysql_query(conn, buffer);
     if(ret != 0)
     {
-        fprintf(stderr, "create table messages%s\n", mysql_error(conn));
+        fprintf(stderr, "create table users error:%s\n", mysql_error(conn));
         return 1;
     }
    printf("create table user success\n");
@@ -55,11 +55,11 @@ int main()
     //计算表的大小
     //1、建表1
     memset(buffer, 0, sizeof(buffer));
-    sprintf(buffer, "create table if not exists friends(id int primary key auto_increment, name varchar(50), messages_num int default 0)");
+    sprintf(buffer, "create table if not exists tableSize(table_name varchar(50) primary key, table_size int default 0)");
     ret = mysql_query(conn, buffer);
     if(ret != 0)
     {
-        fprintf(stderr, "create table table_num %s\n", mysql_error(conn));
+        fprintf(stderr, "create table tableSize error :%s\n", mysql_error(conn));
         return 1;
     }
     printf("create table table_num success\n");
@@ -74,11 +74,11 @@ int main()
         //插入数据
         memset(buffer, 0, sizeof(buffer));
         char *time = getCurTime();
-        sprintf(buffer, "insert into friends(name) values ('alice'),('BoA')");
+        sprintf(buffer, "insert into tableSize(table_name) values ('user')");
         ret = mysql_query(conn, buffer);
         if(ret != 0)
         {
-            fprintf(stderr, "create table friends %s\n", mysql_error(conn));
+            fprintf(stderr, "insert table tableSize error: %s\n", mysql_error(conn));
             return 1;
         }
         printf("insert1 success\n");
@@ -89,13 +89,13 @@ int main()
 
         memset(buffer, 0, sizeof(buffer));
         char *timeNow = getCurTime();
-        sprintf(buffer, "create trigger if not exists update_messages_num after insert on messages \
+        sprintf(buffer, "create trigger if not exists update_tableSize after insert on users \
         for each row \
-        update friends set messages_num = messages_num + 1 where name = new.receiver_name");
+        update tableSize set table_size = table_size + 1 where table_name = new.name");
         ret = mysql_query(conn, buffer);
         if(ret != 0)
         {
-            fprintf(stderr, "create table trigger %s\n", mysql_error(conn));
+            fprintf(stderr, "create table trigger error %s\n", mysql_error(conn));
             return 1;
         }
 
@@ -109,22 +109,20 @@ int main()
         printf("请输入发送者姓名:");
         scanf("%s", name);
         char receiver[10];
-        printf("请输入接受者姓名:");
-        scanf("%s", receiver);
         char *time = getCurTime();
         // printf("name:%s time:%s\n",name, time);
-        sprintf(buffer, "insert into messages(sender_name, receiver_name, message_text) values ('%s','%s', '%s')", name, receiver, time);
-        printf("buffer %s\n", buffer);
+        sprintf(buffer, "insert into users(name, time) values ('%s', '%s')", name, time);
+        printf("buffer: %s\n", buffer);
         ret = mysql_query(conn, buffer);
         if(ret != 0)
         {
-            fprintf(stderr, "insert table messages :%s\n", mysql_error(conn));
+            fprintf(stderr, "insert table users error:%s\n", mysql_error(conn));
             return 1;
         }
         printf("insert1 success\n");
 
            // 执行SQL查询
-        if (mysql_query(conn, "select * from messages")) 
+        if (mysql_query(conn, "select * from users")) 
         {   
             fprintf(stderr, "select table %s\n", mysql_error(conn));
             return 1;
@@ -143,7 +141,7 @@ int main()
             }
             printf("\n");
         }
-           if(num > 1)
+           if(num > 4)
         {
             break;
         }
