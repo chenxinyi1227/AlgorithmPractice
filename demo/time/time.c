@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 
+#if 0
 char *getTime()
 {
     time_t currentTime;
@@ -21,6 +22,18 @@ char *getTime()
 
     //获取当前时间
     time(&currentTime);
+    timeinfo = localtime(&currentTime);
+    strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", timeinfo);
+    return timeString;
+}
+#endif
+
+char *getTime()
+{
+    time_t currentTime;
+    struct tm *timeinfo;
+    static char timeString[80] = {0};//将timeString改为静态变量
+    time(&currentTime);  //获取当前时间
     timeinfo = localtime(&currentTime);
     strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", timeinfo);
     return timeString;
