@@ -251,8 +251,9 @@ int main()
                 }
             } 
         }
+    }
 #endif
-      }
+  
 #if 0
 
         /* 接收数据 */
@@ -309,7 +310,7 @@ while(1)
             {
                 if(retread == 0)
                 {
-                    printf("Client disconnected\n");
+                    printf("Client disconnected 下线\n");
                 }
                 else
                 {

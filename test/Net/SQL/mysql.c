@@ -35,7 +35,8 @@ int main()
   res = mysql_store_result(&Test);//存放结果
   if(res == NULL)
     printf("函数执行失败\n");//表格内容位空
-  else{
+  else
+  {
     printf("存在用户\n");
     unsigned int field = mysql_num_fields(res);//返回列
     unsigned int row = mysql_num_rows(res);//返回行
@@ -44,7 +45,8 @@ int main()
     {
       printf("没有该用户\n");
     }
-    else{
+    else
+    {
       while(res_row=mysql_fetch_row(res))
       {
         len = mysql_fetch_lengths(res);//内容长度

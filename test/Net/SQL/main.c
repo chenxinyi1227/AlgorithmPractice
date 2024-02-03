@@ -1,6 +1,8 @@
 #include <mysql/mysql.h>
 #include <stdio.h>
- 
+#include <sys/stat.h>
+#include <time.h>
+
 int main()
 {
     MYSQL *conn;
@@ -8,9 +10,9 @@ int main()
     MYSQL_ROW row;
  
     char *server = "localhost";
-    char *user = "username";
-    char *password = "password";
-    char *database = "database_name";
+    char *user = "root";
+    char *password = "1234";
+    char *database = "demo";
  
     conn = mysql_init(NULL);
  
@@ -23,7 +25,7 @@ int main()
     }
  
     // 执行SQL查询
-    if (mysql_query(conn, "SELECT * FROM table_name")) 
+    if (mysql_query(conn, "select * from user")) 
     {
         fprintf(stderr, "%s\n", mysql_error(conn));
         return 1;
@@ -36,11 +38,21 @@ int main()
     {
         for(int i = 0; i < mysql_num_fields(res); i++) 
         {
-            printf("%s ", row[i] ? row[i] : "NULL");
+            printf("%-4s ", row[i] ? row[i] : "NULL");
         }
         printf("\n");
     }
- 
+    
+    time_t currentTime;
+    struct tm *timeinfo;
+    char timeString[80];
+    //获取当前时间
+    time(&currentTime);
+    timeinfo = localtime(&currentTime);
+    strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", timeinfo);
+    printf("当前时间：%s\n", timeString);
+    
+    
     // 释放结果集和关闭连接
     mysql_free_result(res);
     mysql_close(conn);
