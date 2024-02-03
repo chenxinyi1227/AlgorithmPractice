@@ -21,7 +21,8 @@ void print_history(char *id)
     sprintf(filename,"%s/%s%s","./record.txt",id,".txt");
     int fd;
     fd = open(filename,O_RDONLY);
-    if(fd == -1){
+    if(fd == -1)
+    {
         perror("client open record error\n");
     }
     int len;
@@ -45,11 +46,12 @@ int main()
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_port = htons(PORT);
-    addr.sin_addr.s_addr = inet_addr(INADDR_ANY);
+    addr.sin_addr.s_addr = inet_addr(SERVER_IP);
     socklen_t addrlen = sizeof(addr);
 
     int ret = connect(sfd,(const struct sockaddr*)(&addr),addrlen);
-    if(ret == -1){
+    if(ret == -1)
+    {
         perror("connect error\n");
         return -1;
     }
@@ -72,7 +74,9 @@ int main()
     if(pid == -1)
     {
         perror("fork error\n");
-    }else if(pid == 0)
+    }
+    else 
+    if(pid == 0)
     {
         while(1)
         {
@@ -84,7 +88,9 @@ int main()
             }
             printf("\n");
         }
-    }else{
+    }
+    else
+    {
         while(1)
         {
             char buf[1024] = {};

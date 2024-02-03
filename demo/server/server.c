@@ -15,7 +15,9 @@
 #define PORT 8080
 #define SERVER_IP "172.18.188.222"
 #define BUFFER_SIZE 128
-#if 0
+#define MAX 1024
+
+#if 1
 typedef struct Client
 {
     //socket文件描述符
@@ -43,13 +45,15 @@ void save(char *msg, Client c)
     char *str = ctime(&current_time);
     int fd;
     fd = open(c.address,O_APPEND | O_WRONLY);
-    if(fd == -1){
+    if(fd == -1)
+    {
         perror("server open record error\n");
         return;
     }
     sprintf(record,"%s%s\n\n",str,msg);
     int ret = write(fd,record,strlen(record));
-    if(ret == -1){
+    if(ret == -1)
+    {
         perror("wirte record error\n");
         return;
     }
@@ -76,7 +80,8 @@ void broadcast(char *msg, Client c)
 }
 
 //判断群号是否存在于record目录里，否创建文件
-void exits(Client c){
+void exits(Client c)
+ {
     DIR *db;
     struct dirent *p;
     db = opendir("./record.txt");
@@ -94,8 +99,11 @@ void exits(Client c){
     if(flag == 0)
     {
         umask(0);
-        int ret = creat(c.address,0666);
-        if(ret == -1) perror("creat record error\n");
+        int fd = open("file.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+        if(fd == -1)
+        {
+            perror("open record error\n");
+        }
     }
     closedir(db);
 }
@@ -164,6 +172,7 @@ void receive(int cfd)
     client[count].cfd = cfd;
 }
 #endif
+
 //服务端socket初始化
 int inet_init(const char *ip, unsigned short int port)
 {
@@ -171,6 +180,14 @@ int inet_init(const char *ip, unsigned short int port)
     int sockfd = socket(AF_INET,SOCK_STREAM,0);
     if(sockfd == -1){
         perror("socket err\n");
+        return -1;
+    }
+
+    int opt = 1;
+    int retOpt = setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    if(retOpt == -1)
+    {
+        perror("setsockopt error");
         return -1;
     }
 
@@ -213,7 +230,7 @@ int main()
         struct sockaddr_in caddr;
         socklen_t len = sizeof(caddr);
        
-        int cfd = accept(sfd,(struct sockaddr*)(&caddr),&len);
+        int cfd = accept(sfd,(struct sockaddr*)(&caddr), &len);
         if(cfd == -1){
             perror("accept error\n");
             return -1;
@@ -223,7 +240,8 @@ int main()
         pthread_t tid;
         int ret = pthread_create(&tid,NULL,pthread_run,(void*)(&client[count]));
         count++;
-        if(ret != 0){
+        if(ret != 0)
+        {
             printf("pthread_create: %s\n",strerror(ret));
             continue;
         }
