@@ -368,7 +368,7 @@ void *handleRequest(void* arg)
             {
                 const char *useName = row[0];
                 printf("用户%s下线\n", useName);
-                //删除
+                //移除在线状态
                 char sql[MAX_SQL_LEN] = {0};
                 sprintf(sql, "delete from online_users where name='%s'", useName);
                 int sql_ret = mysql_query(mysql, sql);
