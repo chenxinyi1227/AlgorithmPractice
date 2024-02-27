@@ -40,8 +40,8 @@ int main()
     printf("str1:%s\n", str1);
     //获取type
     struct json_object * json13 = json_object_object_get(jsonObj,"李");
-    const char *str1 = json_object_get_string(json12);
-    printf("str1:%s\n", str1);
+    const char *str13 = json_object_get_string(json13);
+    printf("str13:%s\n", str13);
 
     /* 将json_object内容转换json格式字符串，其中可能含有转义符。 */
     const char *obj = json_object_to_json_string(jsonObj);

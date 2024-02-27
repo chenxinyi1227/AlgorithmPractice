@@ -4,7 +4,9 @@ s:
 	gcc server.c -o server
 g:
 	gcc -g server.c -o server
-	
+
+f:
+	gcc -g file.c -o file
 all: c s
 
 clean:

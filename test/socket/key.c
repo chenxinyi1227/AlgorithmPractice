@@ -11,32 +11,30 @@ int main() {
     printf("len:%d\n", len);
 
     // 检查输入是否超过8位
-    if(len < 8 || len > 8)
-    {
-        printf("密码长度不符合要求, 请重新输入\n");
-        // exit(-1);
+    if (len != 8) {
+        printf("密码长度不符合要求，请重新输入\n");
+        return 1;
     }
-    else
-    {
-        printf("%ld\n", sizeof(input));
 
-        // 检查输入是否为数字、特殊字符的组合
-        for (int i = 0; i < 8; i++) 
-        {
-            if (input[i] < '0' || input[i] > '9') 
-            {
-                printf("输入不符合要求！\n");
-                return 1;
-            }
-            
+    printf("%ld\n", sizeof(input));
+
+    // 检查输入是否为数字、特殊字符的组合
+    int hasSpecialChar = 0;
+    for (int i = 0; i < 8; i++) {
+        if (input[i] < '0' || input[i] > '9') {
+            hasSpecialChar = 1;
+            break;
         }
-        // 输入符合要求
-        printf("输入符合要求！\n");
-
     }
 
-    
+    // 检查是否包含特殊字符
+    if (!hasSpecialChar) {
+        printf("密码必须包含至少一位特殊字符，请重新输入\n");
+        return 1;
+    }
 
-  
+    // 输入符合要求
+    printf("输入符合要求！\n");
+
     return 0;
 }
